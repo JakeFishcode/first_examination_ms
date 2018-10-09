@@ -3,6 +3,7 @@
 //2.原理没有注释 
 /***************************************************/ 
 #include <stdio.h>
+#include <math.h> 
 int main()
 {
 	char func=0,temp=0,flag=0;//func 为功能选择的参数，temp为暂存的数 flag为检测输入的标志 
@@ -16,6 +17,7 @@ int main()
 	printf("程序二：实现进制转换\n");
 	printf("输入 1 :执行二进制转换为十进制（0~11111111B）\n");
 	printf("输入 2 :执行十进制转换为二进制（0~65535）\n");
+	printf("输入 3 :退出程序\n");
 	printf("/********************************************/\n");
 	while(1)
 	{
@@ -31,7 +33,7 @@ int main()
     	i = 0;
     	k = 1;
 
-		printf("请进行功能选择：");
+		printf("请进行功能选择(1/2/3):");
 		scanf("%c",&func);
 		while((temp=getchar()) != '\n') flag = 1;
 		if(func == '1' && flag == 0)//进行二进制转化为十进制 
@@ -53,7 +55,7 @@ int main()
 			
 			if(n >11111111)//超出1111 1111 的数排除 报错（3） 
 			{
-				flag = 1;
+				flag = 2;
 			}
 			 
 			n_c = n;//操作n_c ,不改变n
@@ -70,7 +72,15 @@ int main()
 			}
 			else
 			{
-				printf("您的输入出现了错误！\n");
+				printf("\n出现了错误，");
+				if(flag == 1)
+				{
+					printf("出现了除0和1以外的数！\n");					
+				}
+				if(flag == 2)
+				{
+					printf("所输入的数大于11111111B！\n");					
+				}				
 			}
 		    	
 		}
@@ -79,7 +89,7 @@ int main()
 			printf("请输入一个十进制数:");
 			scanf("%d",&n);
 			while((temp=getchar()) != '\n') flag=1;
-			if(n > 65535 || n<0) flag = 1;
+			if(n > 65535 || n<0) flag = 2;
 			n_c = n;
 			if(n_c <= 1023 && flag==0)//小于1023的可以直接处理 
    			{
@@ -120,17 +130,30 @@ int main()
         		}
 				printf("十进制数 %lld 转换为二进制为 %lld%lld\n",n,swnum2,swnum);//反过来就是二进制 
 			}
-			if(flag == 1)
+			if(flag != 0)
 			{
-				printf("您的输入出现了错误！\n"); 
+				printf("\n出现了错误，");
+				if(flag == 1)
+				{
+					printf("所输入出现非数字!\n");					
+				}
+				if(flag == 2)
+				{
+					printf("所输入的数大于65535或小于0！\n");				
+				}
 			}
     	
      
 		}
+		else if(func == '3'&& flag == 0)
+		{
+			break;
+		}
 		else
 		{
-			printf("输入的数不是1或2,请重新输入\n"); 
+			printf("您输入的数不是1,2或3,请重新输入！\n"); 
 		} 
+	printf("\n");
 
 	}
 	return 0;
